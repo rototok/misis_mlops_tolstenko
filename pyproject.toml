@@ -1,5 +1,5 @@
 [project]
-name = "lab-1"
+name = "misis_mlops_tolstenko"
 version = "0.1.0"
 description = ""
 authors = [
@@ -13,7 +13,8 @@ dependencies = [
     "fastapi (>=0.120.1,<0.121.0)",
     "transformers (>=4.57.1,<5.0.0)",
     "torch (>=2.9.0,<3.0.0)",
-    "uvicorn (>=0.38.0,<0.39.0)"
+    "uvicorn (>=0.38.0,<0.39.0)",
+    "httpx (>=0.28.1,<0.29.0)"
 ]
 packages = [
     {include = "app", from = "src"}
@@ -30,5 +31,4 @@ dev = [
     "black (>=25.9.0,<26.0.0)",
     "mypy (>=1.18.2,<2.0.0)",
     "isort (>=7.0.0,<8.0.0)",
-    "httpx (>=0.28.1,<0.29.0)"
 ]
