@@ -25,12 +25,14 @@ async def health():
 
 @app.post('/predict')
 async def predict(input_text: Text):
-    return model.predict(input_text.text)
+    predicted_label = model.predict(input_text.text)
+    return ModelPredictResponse(predicted_label=predicted_label)
 
 
 @app.post('/predict_batch')
 async def predict_batch(input_texts: Texts):
-    return model.predict_batch(input_texts.texts)
+    predicted_labels = model.predict_batch(input_texts.texts)
+    return ModelPredictBatchResponse(predicted_labels=predicted_labels)
 
 
 @app.get('/model_info')

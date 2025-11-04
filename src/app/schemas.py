@@ -11,8 +11,8 @@ class Texts(BaseModel):
 
 
 class ModelPredictResponse(BaseModel):
-    label: str
+    predicted_label: str
 
 
 class ModelPredictBatchResponse(BaseModel):
-    labels: List[str]
+    predicted_labels: List[str]
