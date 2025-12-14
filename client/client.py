@@ -1,6 +1,6 @@
 import tritonclient.http as httpclient
 import numpy as np
-from schemas import ClassificationRequestBatch, ClassificationResponse, ClassificationResponseBatch
+from schemas import ClassificationRequestBatch, ClassificationResponseBatch
 from fastapi import FastAPI
 
 app = FastAPI(
