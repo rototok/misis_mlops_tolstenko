@@ -4,7 +4,8 @@ WORKDIR /workspace
 
 RUN pip install --no-cache-dir \
     transformers \
-    numpy
+    numpy \
+    torch==2.4.0
 
 COPY model_repository /models
 
