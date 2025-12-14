@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 import triton_python_backend_utils as pb_utils
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
@@ -13,8 +14,8 @@ class TritonPythonModel:
         responses = []
 
         for request in requests:
-            input_tensor = pb_utils.get_input_tensor_by_name(request, "TEXT").as_numpy()[0]
-            texts = [text.decode('utf-8') for text in input_tensor]
+            input_tensor = pb_utils.get_input_tensor_by_name(request, "TEXT").as_numpy()
+            texts = [text.decode('utf-8') for text in input_tensor.flatten()]
 
             enc = self.tokenizer(
                 texts,
@@ -23,11 +24,13 @@ class TritonPythonModel:
                 return_tensors="pt"
             )           
 
-            outputs = self.model(**enc)
-            logits = outputs.logits.cpu().numpy().astype(np.float32)
+            with torch.no_grad():
+                outputs = self.model(**enc)
+                logits = outputs.logits
+                logits_array = logits.cpu().numpy().astype(np.float32)
 
-            output_tensor = pb_utils.Tensor("TOXICITY_LOGITS", logits)
-            response = pb_utils.InferenceResponse(output_tensor=[output_tensor])
+            output_tensor = pb_utils.Tensor("TOXICITY_LOGITS", logits_array)
+            response = pb_utils.InferenceResponse(output_tensors=[output_tensor])
             responses.append(response)
         
         return responses
