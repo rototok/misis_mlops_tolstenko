@@ -1,12 +1,16 @@
-FROM python:3.10-slim
+FROM nvcr.io/nvidia/tritonserver:24.07-py3
 
-WORKDIR /app
+WORKDIR /workspace
 
-RUN python -m pip install --no-cache-dir pip setuptools wheel && \
-    python -m pip install --no-cache-dir poetry==2.2.1
+RUN pip install --no-cache-dir \
+    transformers \
+    numpy
 
-COPY . .
+COPY model_repository /models
 
-RUN poetry install --without dev --no-root --no-interaction --no-ansi
+EXPOSE 8000
 
-CMD ["poetry", "run", "pytest"]
+CMD ["tritonserver", \
+     "--model-repository=/models", \
+     "--allow-http=true"]
+
