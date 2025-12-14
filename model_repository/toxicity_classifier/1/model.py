@@ -13,7 +13,7 @@ class TritonPythonModel:
         responses = []
 
         for request in requests:
-            input_tensor = pb_utils.get_input_tensor_by_name(request, "TEXT").as_numpy()
+            input_tensor = pb_utils.get_input_tensor_by_name(request, "TEXT").as_numpy()[0]
             texts = [text.decode('utf-8') for text in input_tensor]
 
             enc = self.tokenizer(
