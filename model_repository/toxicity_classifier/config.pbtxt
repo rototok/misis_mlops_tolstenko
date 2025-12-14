@@ -1,6 +1,5 @@
 name: "toxicity_classifier"
 backend: "python"
-
 max_batch_size: 8
 
 input [
@@ -21,6 +20,7 @@ output [
 
 instance_group [
   {
+    count: 1
     kind: KIND_CPU
   }
 ]

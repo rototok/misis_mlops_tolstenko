@@ -1,13 +1,13 @@
 import numpy as np
 import triton_python_backend_utils as pb_utils
-from transformers import BertTokenizer, BertForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 class TritonPythonModel:
     def initialize(self, args):
         model_name = "s-nlp/russian_toxicity_classifier"
 
-        self.tokenizer = BertTokenizer.from_pretrained(model_name)
-        self.model = BertForSequenceClassification.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
     def execute(self, requests):
         responses = []
